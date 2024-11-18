@@ -1,0 +1,18 @@
+# Ignorer l'environnement virtuel
+mspyenv/
+.env/
+# Ignorer les fichiers temporaires Python
+*.pyc
+__pycache__/
+
+# Ignorer les fichiers de configuration de VSCode
+.vscode/
+
+# Ignorer les fichiers audio volumineux
+*.wav
+*.mp3
+
+
+# Dossier de build PyInstaller
+dist/
+build/
