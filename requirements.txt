@@ -1,5 +1,7 @@
-PySide6
-sounddevice
-scipy
+fastapi
+uvicorn
+pyannote.audio
 whisper
-pytest
+ffmpeg-python
+demucs
+torch
