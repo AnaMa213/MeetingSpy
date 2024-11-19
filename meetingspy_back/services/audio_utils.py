@@ -1,6 +1,6 @@
 import ffmpeg
 import os
-
+from pydub import AudioSegment
 def convert_to_wav(audio_path):
     """
     Convert an audio file to a WAV file using FFmpeg.
@@ -22,6 +22,31 @@ def convert_to_wav(audio_path):
     else:
         wav_path = audio_path
     return wav_path
+
+
+def compress_wav(audio_path):
+    """
+    Compress an audio file by adjusting its sample rate, channels, and sample width.
+
+    Parameters
+    ----------
+    audio_path : str
+        The path to the WAV audio file to be compressed.
+
+    Returns
+    -------
+    AudioSegment
+        The compressed audio segment.
+    """
+    audio = AudioSegment.from_file(audio_path)
+
+    # Appliquer la compression (modifier la fréquence d'échantillonnage, les canaux, et la largeur d'échantillon)
+    compressed_audio = audio.set_frame_rate(22050).set_channels(1).set_sample_width(2)
+
+    # Exporter le fichier compressé avec un débit binaire réduit
+    compressed_audio.export(audio_path, format="wav", bitrate="64k")
+    
+    return audio_path
 
 def get_audio_segment(diarization):
     """

@@ -1,63 +1,87 @@
+import spacy
 
-import os
-from io import BytesIO
-import numpy as np
-from scipy.io import wavfile
-# Charger le fichier audio et extraire le segment spécifié
-from pydub import AudioSegment
-from meetingspy_back.models.load_model import load_transcription_model
-
-# Charger le modèle Whisper pour la transcription
-model = load_transcription_model()
-
-def transcribe_audio(segments, rttm_path, audio_path):
-    # Lire les segments de l'audio à partir du fichier RTTM
+def assign_speaker_name(dialogue):
     """
-    Transcribe an audio file using segments from an RTTM file.
+    Assign a name to each speaker in a dialogue.
 
     Parameters
     ----------
-    audio_path : str
-        The path to the audio file to transcribe.
-    rttm_path : str
-        The path to the RTTM file containing segment information.
+    dialogue : str
+        The dialogue to be processed. It should be a string with each line containing the
+        speaker's number and the dialogue. For example:
+
+        SPEAKER 1 00:00:00,000 --> 00:00:00,000
+        Hello, how are you?
+        SPEAKER 2 00:00:00,000 --> 00:00:00,000
+        I am fine, thank you.
 
     Returns
     -------
-    str
-        The transcription of the audio file.
+    None
     """
-
-    if not segments:
-        print("Aucun segment audio trouvé pour la transcription.")
-        return "Aucun segment audio disponible pour la transcription."
-
-    transcription = ""
-
-    try:
-        with open(rttm_path, "r", encoding="utf-8") as rttm:
-            for line in rttm:
-                parts = line.strip().split()
-                start_time = float(parts[3])
-                duration = float(parts[4])
-                speaker = parts[7]
-                end_time = start_time + duration
-
-                # Transcrire chaque segment (à adapter avec un vrai modèle)
-                audio = AudioSegment.from_wav(audio_path)
-                segment = audio[start_time * 1000:end_time * 1000]  # Conversion en millisecondes
-
-                # Sauvegarder le segment temporairement
-                segment_path = "temp/segment.wav"
-                segment.export(segment_path, format="wav")
-                
-                result = model.transcribe(segment_path)
-                # Supprimer le segment temporaire
-                os.remove(segment_path)
-                
-                transcription += f"{speaker}: {result["text"]}\n"
     
-    except Exception as e:
-        print(f"Erreur lors de la transcription du segment: {str(e)}")
+    nlp = spacy.load('fr_core_news_lg')
 
-    return transcription
+    # Split into lines
+    lines = dialogue.strip().split("\n")
+
+    # Initialize speaker names dictionary
+    speaker_dict = {}
+
+    for i in range(0, len(lines), 2):
+        speaker_line = lines[i]
+        dialogue_line = lines[i+1]
+
+        # Get speaker number from the speaker line
+        speaker_number = speaker_line.split()[1]
+
+        # Perform NER on the dialogue line
+        doc = nlp(dialogue_line)
+        names = [ent.text for ent in doc.ents if ent.label_ == 'NOM']
+
+        # If there are names in the dialogue line, use the last one as the speaker's name
+        if names:
+            speaker_dict[speaker_number] = names[-1]
+
+        # Get speaker's name from the dictionary, or use the speaker number if the name is not known
+        speaker_name = speaker_dict.get(speaker_number, f"Locuteur {speaker_number}")
+
+        # Print the dialogue line with the speaker's name
+        print(f"{speaker_name} {speaker_number} {speaker_line.split()[2]}")
+        print(dialogue_line)
+
+
+def transcript_to_dictionary(dialogue):
+    
+    """
+    Split a dialogue transcript into a dictionary with speaker names as keys and their transcripts as values.
+
+    Parameters
+    ----------
+    dialogue : str
+        The dialogue transcript to split.
+
+    Returns
+    -------
+    dict
+        A dictionary with the speaker names as keys and their transcripts as values.
+    """
+    
+    lines = dialogue.splitlines()
+
+    # Initialize the dictionary
+    dictionary = {}
+
+    # Iterate through the lines and construct the dictionary
+    for i in range(0, len(lines), 2):
+        name_line = lines[i]
+        text_line = lines[i + 1]
+
+        # Extract name and text
+        name = name_line.split()[0]
+        text = text_line
+
+        # Add to the dictionary
+        dictionary[name] = text
+
+    return dictionary

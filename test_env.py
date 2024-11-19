@@ -1,21 +1,9 @@
-import sys
-print(sys.executable)
+import torch
+import torchaudio
+from asteroid.models import ConvTasNet
 
-import os
-print("Répertoire courant :", os.getcwd())
-
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QThread
-print("PySide6 fonctionne correctement.")
-
-from PySide6.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QPushButton,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-    QLabel,
-    QMessageBox,
-)
-from PySide6.QtCore import QThread, Signal
+try:
+    model = ConvTasNet.from_pretrained("JorisCos/ConvTasNet_Libri2Mix_sepnoisy_16k")
+    print("Conv-TasNet chargé avec succès !")
+except Exception as e:
+    print(f"Erreur lors du chargement de Conv-TasNet : {e}")
