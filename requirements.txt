@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-pyannote.audio
-whisper
-ffmpeg-python
-demucs
-torch

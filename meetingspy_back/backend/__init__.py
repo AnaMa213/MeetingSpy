@@ -9,6 +9,7 @@ from .transcription import assign_speaker_name, transcript_to_dictionary
 from .separation import separate_audio_sources
 from .post_processing import merge_close_segments
 from .post_processing import generate_combined_transcriptions
+from.logging_config import setup_logging
 
 # Liste des éléments disponibles pour import
 __all__ = [
@@ -18,5 +19,7 @@ __all__ = [
     "transcript_to_dictionary",
     "separate_audio_sources",
     "merge_close_segments",
-    "generate_combined_transcriptions"
+    "generate_combined_transcriptions",
+    "setup_logging"
+    
 ]

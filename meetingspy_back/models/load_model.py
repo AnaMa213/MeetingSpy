@@ -1,4 +1,5 @@
 import whisper
+import torch
 from pyannote.audio import Pipeline
 
 from meetingspy_back.models.models_config import DIARIZATION_MODEL_PATH, TRANSCRIPTION_MODEL
@@ -26,4 +27,4 @@ def load_transcription_model():
     -------
     whisper.model.Whisper
     """
-    return whisper.load_model(TRANSCRIPTION_MODEL)
+    return whisper.load_model(TRANSCRIPTION_MODEL, device=torch.device("cuda" if torch.cuda.is_available() else "cpu"))

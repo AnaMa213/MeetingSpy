@@ -1,14 +1,19 @@
 import os
-import shutil
+import logging
 from fastapi import FastAPI, File, UploadFile
-from meetingspy_back.backend.transcription import assign_speaker_name, transcript_to_dictionary
-from meetingspy_back.services.audio_utils import compress_wav, convert_to_wav
+from meetingspy_back.backend.logging_config import setup_logging
+from meetingspy_back.services.audio_utils import  convert_to_wav
 from .diarization import SpeakerDiarizer
+
+
+# Configurer les logs
+setup_logging()
+logger = logging.getLogger("main_controller")
 
 app = FastAPI()
 
 @app.post("/process_audio")
-async def process_audio(file: UploadFile = File(...), num_speakers: int = 2):
+async def process_audio_pyannote(file: UploadFile = File(...), num_speakers: int = 4):
     """
     Traitement d'un fichier audio pour diarisation et transcription.
 
@@ -35,18 +40,25 @@ async def process_audio(file: UploadFile = File(...), num_speakers: int = 2):
     
     # Conversion en WAV si nécessaire
     wav_path = convert_to_wav(sanitized_audio_path)
-    # Conversion en WAV si nécessaire
-    compress_path = compress_wav(wav_path)
     
-    print("Initializing SpeakerDiarizer...")
+    logger.info("Initializing SpeakerDiarizer...")
     diarizer = SpeakerDiarizer(num_speakers=num_speakers)
     
-    print("Running diarization...")
-    transcript = diarizer.diarize(compress_path, temp_dir)
+    logger.info("Running diarization...")
+    transcript = diarizer.diarize(wav_path, temp_dir)
     
     # Retourner toutes les transcriptions combinées
     return {"transcription": transcript}
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    logging.getLogger("main_controller").info("Starting FastAPI server...")
+    uvicorn.run(
+        "meetingspy_back.backend.main_controller:app",
+        host="0.0.0.0",
+        port=8000,
+        log_config=None,  # Désactive la configuration de log par défaut d'Uvicorn
+        log_level="debug"
+    )
+
+

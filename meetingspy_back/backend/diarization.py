@@ -1,20 +1,17 @@
 import os
+import logging
 import shutil
-import datetime
 import subprocess
-import contextlib
-import wave
+from pyannote.audio import Pipeline as PyannotePipeline
 import torch
-from pyannote.audio.pipelines.speaker_verification import PretrainedSpeakerEmbedding
-from pyannote.audio import Audio
-from pyannote.core import Segment
+from pydub import AudioSegment
 
-import numpy as np
-from sklearn.cluster import AgglomerativeClustering
 
 
 from meetingspy_back.models.load_model import load_transcription_model
 
+# Utiliser le logger globalement configuré
+module_logger = logging.getLogger("diarization")
 
 class SpeakerDiarizer:
     """
@@ -41,12 +38,33 @@ class SpeakerDiarizer:
         num_speakers : int, optional
             The number of speakers to identify in the diarization process, by default 2.
         """
+        module_logger.info("Initialisation du SpeakerDiarizer avec %d locuteurs", num_speakers)
         self.num_speakers = num_speakers
-        self.model = load_transcription_model()
-        self.embedding_model = PretrainedSpeakerEmbedding(
-            "speechbrain/spkrec-ecapa-voxceleb",
-            device=torch.device("cuda")
+        self.transcription_model = load_transcription_model()
+        if torch.cuda.is_available():
+            module_logger.info("Transfert du modèle de transcription sur GPU...")
+            self.transcription_model = self.transcription_model.to(torch.device("cuda"))
+        else:
+            module_logger.warning("GPU non disponible, utilisation du CPU pour la transcription.")
+
+        self.pyannote_pipeline = PyannotePipeline.from_pretrained(
+            "pyannote/speaker-diarization-3.1",
+            use_auth_token="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"
         )
+        if torch.cuda.is_available():
+            module_logger.info("Transfert du pipeline PyAnnote sur GPU...")
+            self.pyannote_pipeline = self.pyannote_pipeline.to(torch.device("cuda"))
+        else:
+            module_logger.warning("GPU non disponible, utilisation du CPU pour PyAnnote.")
+
+
+    def convertir_secondes(self, secondes):
+        if secondes < 60:
+            return f"{secondes:.2f} s"
+        else:
+            minutes = secondes // 60
+            secondes_restantes = secondes % 60
+            return f"{minutes:.0f}min{secondes_restantes:.2f}s"  
 
     def diarize(self, path, tmp_dir):
         """
@@ -62,101 +80,87 @@ class SpeakerDiarizer:
         str
             The transcribed text with speaker labels.
         """
-    
+        module_logger.info("Starting diarization pyannote process.")
         try:
             # Copier l'audio original dans le dossier temporaire
             audio_path = os.path.join(tmp_dir, 'audio.wav')
             if path[-3:] != 'wav':
+                module_logger.debug("Converting audio to WAV format. (%s)", path)
                 subprocess.call(['ffmpeg', '-i', path, audio_path, '-y'])
             else:
+                module_logger.debug("Copying WAV audio to temporary directory. (%s)", path)
                 shutil.copy(path, audio_path)
 
-            # Utiliser le dossier temporaire pour les traitements
-            result = self.model.transcribe(audio_path)
-            segments = result["segments"]
+            # Charger le pipeline pré-entraîné
+            print("Chargement du pipeline PyAnnote...")
+            pipeline = PyannotePipeline.from_pretrained("pyannote/speaker-diarization-3.1", use_auth_token="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")
+            
+            print(f"Diarizing audio: {audio_path}...")
+            diarization = pipeline(audio_path, num_speakers=self.num_speakers)
+            transcribe_model = load_transcription_model()
 
-            with contextlib.closing(wave.open(audio_path, 'r')) as f:
-                frames = f.getnframes()
-                rate = f.getframerate()
-                duration = frames / float(rate)
+            # Temporary directory for audio segments
+            segment_temp_dir = "temp_segments"
+            os.makedirs(segment_temp_dir, exist_ok=True)
 
-            embeddings = np.zeros((len(segments), 192))
-            for i, segment in enumerate(segments):
-                embeddings[i] = self.segment_embedding(segment, audio_path, duration)
+            # Step 3: Transcribe Each Segment
+            merged_transcripts = []
+            audio = AudioSegment.from_file(audio_path)
 
-            embeddings = np.nan_to_num(embeddings)
-            clustering = AgglomerativeClustering(self.num_speakers).fit(embeddings)
-            labels = clustering.labels_
+            current_speaker = None
+            current_start = None
+            current_text = ""
+            
+            for turn, _, speaker in diarization.itertracks(yield_label=True):
+                start = turn.start
+                end = turn.end
 
-            for i, segment in enumerate(segments):
-                segment["speaker"] = 'SPEAKER ' + str(labels[i] + 1)
+                # Vérification des durées et cohérences
+                segment_duration = end - start
+                if segment_duration < 0.5:
+                    module_logger.warning("Skipping segment for %s: too short (%.2f s).", speaker, segment_duration)
+                    continue
+                if start >= end or start < 0:
+                    module_logger.error("Skipping segment for %s: invalid start (%.2f s) or end (%.2f s).", speaker, start, end)
+                    continue
+                # Extract the segment
+                segment_path = os.path.join(segment_temp_dir, f"{speaker}_{start:.2f}_{end:.2f}.wav")
+                audio_segment = audio[start * 1000:end * 1000]  # PyDub works in milliseconds
+                audio_segment.export(segment_path, format="wav")
 
-            transcript = self.generate_transcript(segments)
-            return transcript
+                # Transcribe the segment
+                result = transcribe_model.transcribe(segment_path, language="fr")
+                text = result["text"].strip()
+
+                # Merge logic: Combine consecutive segments of the same speaker
+                if speaker == current_speaker:
+                    # Extend the text and update the end time
+                    current_text += " " + text
+                    current_end = self.convertir_secondes(end)
+                else:
+                    # Save the current speaker's text before switching
+                    if current_speaker is not None:
+                        merged_transcripts.append(
+                            f"{current_speaker} [{current_start} - {current_end}]: {current_text}"
+                        )
+                    # Start a new speaker
+                    current_speaker = speaker
+                    current_start = self.convertir_secondes(start)
+                    current_end = self.convertir_secondes(end)
+                    current_text = text
+                        
+            # Add the final speaker's segment
+            if current_speaker is not None:
+                merged_transcripts.append(
+                    f"{current_speaker} [{current_start}- {current_end}]: {current_text}"
+                )
+
+            # Return the merged transcripts as a single string
+            return "\n\n".join(merged_transcripts)
 
         finally:
-            # Supprimer le dossier temporaire
+            module_logger.info("Cleaning up temporary directory.")
             shutil.rmtree(tmp_dir)
+            shutil.rmtree(segment_temp_dir)
+            
 
-    def segment_embedding(self, segment, path, duration):
-        """
-        Extract the embedding for a given audio segment.
-
-        Parameters
-        ----------
-        segment : dict
-            A dictionary containing 'start' and 'end' times of the segment.
-        path : str
-            The path to the audio file.
-        duration : float
-            The total duration of the audio file.
-
-        Returns
-        -------
-        numpy.ndarray
-            The embedding of the audio segment.
-        """
-        start = segment["start"]
-        end = min(duration, segment["end"])
-        clip = Segment(start, end)
-        audio = Audio()
-        waveform, _ = audio.crop(path, clip)
-        return self.embedding_model(waveform[None])
-
-    def generate_transcript(self, segments):
-        """
-        Generate a transcript from the segments with speaker labels.
-
-        Parameters
-        ----------
-        segments : list
-            A list of dictionaries containing segment information including speaker labels.
-
-        Returns
-        -------
-        str
-            The formatted transcript with speaker labels.
-        """
-        def time(secs): 
-            """
-            Format a time in seconds as a datetime.timedelta object.
-
-            Parameters
-            ----------
-            secs : float
-                The time in seconds to be formatted.
-
-            Returns
-            -------
-            datetime.timedelta
-                The formatted time as a datetime.timedelta object.
-            """
-            return datetime.timedelta(seconds=round(secs))
-
-        transcript = ""
-        for i, segment in enumerate(segments):
-            if i == 0 or segments[i - 1]["speaker"] != segment["speaker"]:
-                transcript += f"\n{segment['speaker']} {time(segment['start'])}\n"
-            transcript += segment["text"][1:] + ' '
-
-        return transcript
