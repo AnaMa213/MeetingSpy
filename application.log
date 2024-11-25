@@ -1662,3 +1662,196 @@ SPEAKER_00 [4min55.06s- 4min55.77s]: On vous suit.
 2024-11-25 14:45:13,652 [[94mINFO[0m] speechbrain.utils.quirks: Excluded quirks specified by the `SB_DISABLE_QUIRKS` environment (comma-separated list): []
 2024-11-25 14:45:14,762 [[94mINFO[0m] diarization_service: Transfert du pipeline PyAnnote sur GPU...
 2024-11-25 14:45:14,778 [[94mINFO[0m] main_controller: Modèles chargés avec succès.
+2024-11-25 14:47:31,806 [[94mINFO[0m] main_controller: Traitement du fichier enregistrement-2_SEpNotWX.mp3
+2024-11-25 14:47:31,811 [[94mINFO[0m] main_controller: Diarization avec 4 speakers et PyAnnote pipeline.
+2024-11-25 14:47:31,811 [[94mINFO[0m] diarization_service: Starting diarization pyannote process.
+2024-11-25 14:47:31,812 [[94mINFO[0m] diarization_service: Converting audio to 16 kHz mono WAV: tmp/enregistrement-2_SEpNotWX.mp3...
+2024-11-25 14:47:31,812 [[92mDEBUG[0m] audio_utils: Starting conversion of audio file: tmp/enregistrement-2_SEpNotWX.mp3
+2024-11-25 14:47:31,812 [[94mINFO[0m] audio_utils: Converting file to 16 kHz mono WAV: tmp/enregistrement-2_SEpNotWX.mp3
+2024-11-25 14:47:32,066 [[92mDEBUG[0m] audio_utils: Conversion completed. Output file: tmp/tmp_audio_file_16000_mono.wav
+2024-11-25 14:47:32,066 [[94mINFO[0m] diarization_service: Diarizing audio: tmp/tmp_audio_file_16000_mono.wav...
+2024-11-25 14:47:34,904 [[94mINFO[0m] main_controller: Résultat de la diarization : 107 segments pour 4 speakers.
+2024-11-25 14:47:34,905 [[92mDEBUG[0m] main_controller: Segments reçus pour la transcription : [{'start': 0.03096875, 'end': 4.26659375, 'speaker': 'SPEAKER_02'}, {'start': 4.755968750000001, 'end': 12.26534375, 'speaker': 'SPEAKER_02'}, {'start': 12.73784375, 'end': 22.67721875, 'speaker': 'SPEAKER_02'}, {'start': 25.410968750000002, 'end': 26.254718750000002, 'speaker': 'SPEAKER_02'}, {'start': 27.53721875, 'end': 34.30409375, 'speaker': 'SPEAKER_02'}, {'start': 31.40159375, 'end': 31.80659375, 'speaker': 'SPEAKER_00'}, {'start': 34.82721875, 'end': 38.775968750000004, 'speaker': 'SPEAKER_02'}, {'start': 38.10096875, 'end': 43.43346875, 'speaker': 'SPEAKER_00'}, {'start': 39.65346875, 'end': 40.09221875, 'speaker': 'SPEAKER_02'}, {'start': 41.290343750000005, 'end': 42.43784375, 'speaker': 'SPEAKER_02'}, {'start': 43.197218750000005, 'end': 45.47534375, 'speaker': 'SPEAKER_02'}, {'start': 44.462843750000005, 'end': 44.49659375, 'speaker': 'SPEAKER_00'}, {'start': 44.49659375, 'end': 44.51346875, 'speaker': 'SPEAKER_03'}, {'start': 44.51346875, 'end': 44.53034375, 'speaker': 'SPEAKER_00'}, {'start': 44.53034375, 'end': 44.564093750000005, 'speaker': 'SPEAKER_03'}, {'start': 44.564093750000005, 'end': 44.71596875, 'speaker': 'SPEAKER_00'}, {'start': 44.71596875, 'end': 44.766593750000006, 'speaker': 'SPEAKER_03'}, {'start': 45.47534375, 'end': 46.72409375, 'speaker': 'SPEAKER_03'}, {'start': 46.72409375, 'end': 46.875968750000006, 'speaker': 'SPEAKER_02'}, {'start': 46.875968750000006, 'end': 47.36534375, 'speaker': 'SPEAKER_03'}, {'start': 47.36534375, 'end': 58.384718750000005, 'speaker': 'SPEAKER_02'}, {'start': 59.734718750000006, 'end': 63.58221875, 'speaker': 'SPEAKER_02'}, {'start': 62.85659375, 'end': 63.46409375, 'speaker': 'SPEAKER_01'}, {'start': 65.94471875, 'end': 67.63221875, 'speaker': 'SPEAKER_01'}, {'start': 67.04159375, 'end': 67.68284375, 'speaker': 'SPEAKER_02'}, {'start': 70.58534375, 'end': 85.82346875, 'speaker': 'SPEAKER_02'}, {'start': 88.45596875000001, 'end': 89.78909375, 'speaker': 'SPEAKER_02'}, {'start': 90.41346875, 'end': 90.44721875, 'speaker': 'SPEAKER_00'}, {'start': 90.44721875, 'end': 90.76784375000001, 'speaker': 'SPEAKER_02'}, {'start': 90.76784375000001, 'end': 90.81846875000001, 'speaker': 'SPEAKER_00'}, {'start': 91.17284375000001, 'end': 95.94846875, 'speaker': 'SPEAKER_00'}, {'start': 95.08784375, 'end': 98.19284375000001, 'speaker': 'SPEAKER_02'}, {'start': 99.34034375, 'end': 99.96471875, 'speaker': 'SPEAKER_00'}, {'start': 99.96471875, 'end': 100.82534375, 'speaker': 'SPEAKER_02'}, {'start': 100.20096875, 'end': 100.50471875000001, 'speaker': 'SPEAKER_00'}, {'start': 101.33159375000001, 'end': 102.56346875000001, 'speaker': 'SPEAKER_02'}, {'start': 102.66471875, 'end': 108.72284375000001, 'speaker': 'SPEAKER_02'}, {'start': 102.88409375, 'end': 103.15409375, 'speaker': 'SPEAKER_00'}, {'start': 103.93034375, 'end': 106.73159375, 'speaker': 'SPEAKER_00'}, {'start': 108.67221875000001, 'end': 124.29846875000001, 'speaker': 'SPEAKER_00'}, {'start': 108.77346875, 'end': 108.82409375, 'speaker': 'SPEAKER_02'}, {'start': 108.85784375, 'end': 108.94221875000001, 'speaker': 'SPEAKER_02'}, {'start': 113.71784375, 'end': 113.73471875000001, 'speaker': 'SPEAKER_02'}, {'start': 113.73471875000001, 'end': 114.12284375, 'speaker': 'SPEAKER_03'}, {'start': 116.77221875000001, 'end': 116.80596875, 'speaker': 'SPEAKER_02'}, {'start': 116.80596875, 'end': 117.12659375000001, 'speaker': 'SPEAKER_03'}, {'start': 125.19284375000001, 'end': 151.75409375, 'speaker': 'SPEAKER_00'}, {'start': 133.12409375000001, 'end': 133.56284375, 'speaker': 'SPEAKER_01'}, {'start': 141.03846875000002, 'end': 142.05096875, 'speaker': 'SPEAKER_03'}, {'start': 147.38346875000002, 'end': 159.36471875, 'speaker': 'SPEAKER_01'}, {'start': 154.28534375, 'end': 154.67346875, 'speaker': 'SPEAKER_00'}, {'start': 154.94346875000002, 'end': 155.19659375, 'speaker': 'SPEAKER_00'}, {'start': 158.52096875, 'end': 163.76909375, 'speaker': 'SPEAKER_03'}, {'start': 160.73159375, 'end': 160.96784375000001, 'speaker': 'SPEAKER_01'}, {'start': 161.03534375, 'end': 161.35596875000002, 'speaker': 'SPEAKER_01'}, {'start': 161.98034375, 'end': 162.01409375, 'speaker': 'SPEAKER_01'}, {'start': 162.01409375, 'end': 163.75221875, 'speaker': 'SPEAKER_00'}, {'start': 163.76909375, 'end': 171.09284375000001, 'speaker': 'SPEAKER_00'}, {'start': 169.25346875000002, 'end': 169.91159375, 'speaker': 'SPEAKER_02'}, {'start': 169.94534375, 'end': 197.62034375000002, 'speaker': 'SPEAKER_02'}, {'start': 196.55721875, 'end': 198.97034375, 'speaker': 'SPEAKER_00'}, {'start': 198.09284375000001, 'end': 198.75096875000003, 'speaker': 'SPEAKER_02'}, {'start': 200.47221875000002, 'end': 205.80471875, 'speaker': 'SPEAKER_02'}, {'start': 204.60659375, 'end': 209.53409375, 'speaker': 'SPEAKER_00'}, {'start': 206.02409375000002, 'end': 206.34471875000003, 'speaker': 'SPEAKER_02'}, {'start': 210.17534375000002, 'end': 212.80784375000002, 'speaker': 'SPEAKER_02'}, {'start': 212.68971875000003, 'end': 212.77409375000002, 'speaker': 'SPEAKER_00'}, {'start': 212.80784375000002, 'end': 212.97659375, 'speaker': 'SPEAKER_00'}, {'start': 212.97659375, 'end': 214.32659375, 'speaker': 'SPEAKER_02'}, {'start': 213.02721875, 'end': 213.98909375000002, 'speaker': 'SPEAKER_00'}, {'start': 214.32659375, 'end': 214.51221875000002, 'speaker': 'SPEAKER_00'}, {'start': 214.51221875000002, 'end': 214.56284375, 'speaker': 'SPEAKER_01'}, {'start': 214.56284375, 'end': 214.63034375, 'speaker': 'SPEAKER_00'}, {'start': 214.63034375, 'end': 216.60471875000002, 'speaker': 'SPEAKER_01'}, {'start': 214.79909375000003, 'end': 214.96784375000001, 'speaker': 'SPEAKER_00'}, {'start': 214.96784375000001, 'end': 216.18284375000002, 'speaker': 'SPEAKER_02'}, {'start': 217.02659375000002, 'end': 222.73034375, 'speaker': 'SPEAKER_02'}, {'start': 219.84471875000003, 'end': 220.48596875, 'speaker': 'SPEAKER_01'}, {'start': 222.05534375000002, 'end': 222.67971875, 'speaker': 'SPEAKER_01'}, {'start': 222.73034375, 'end': 223.03409375, 'speaker': 'SPEAKER_01'}, {'start': 223.03409375, 'end': 223.23659375000003, 'speaker': 'SPEAKER_03'}, {'start': 223.23659375000003, 'end': 223.54034375, 'speaker': 'SPEAKER_01'}, {'start': 223.54034375, 'end': 223.60784375, 'speaker': 'SPEAKER_03'}, {'start': 223.60784375, 'end': 223.96221875, 'speaker': 'SPEAKER_01'}, {'start': 223.96221875, 'end': 225.05909375000002, 'speaker': 'SPEAKER_03'}, {'start': 226.05471875, 'end': 226.88159375, 'speaker': 'SPEAKER_00'}, {'start': 226.88159375, 'end': 233.49659375000002, 'speaker': 'SPEAKER_03'}, {'start': 230.34096875, 'end': 234.42471875, 'speaker': 'SPEAKER_00'}, {'start': 235.08284375000002, 'end': 235.18409375000002, 'speaker': 'SPEAKER_00'}, {'start': 235.18409375000002, 'end': 235.67346875, 'speaker': 'SPEAKER_03'}, {'start': 235.67346875, 'end': 235.79159375, 'speaker': 'SPEAKER_00'}, {'start': 236.02784375000002, 'end': 239.36909375000002, 'speaker': 'SPEAKER_00'}, {'start': 241.37721875000003, 'end': 245.71409375000002, 'speaker': 'SPEAKER_00'}, {'start': 242.42346875, 'end': 243.90846875000003, 'speaker': 'SPEAKER_03'}, {'start': 245.20784375000002, 'end': 250.57409375, 'speaker': 'SPEAKER_03'}, {'start': 249.73034375, 'end': 260.46284375, 'speaker': 'SPEAKER_02'}, {'start': 259.21409375, 'end': 259.53471875, 'speaker': 'SPEAKER_03'}, {'start': 262.65659375, 'end': 264.51284375, 'speaker': 'SPEAKER_02'}, {'start': 264.76596875, 'end': 271.54971875, 'speaker': 'SPEAKER_00'}, {'start': 271.98846875000004, 'end': 272.03909375, 'speaker': 'SPEAKER_00'}, {'start': 272.52846875, 'end': 273.72659375, 'speaker': 'SPEAKER_00'}, {'start': 274.24971875, 'end': 276.78096875, 'speaker': 'SPEAKER_02'}, {'start': 278.75534375, 'end': 284.47596875, 'speaker': 'SPEAKER_02'}, {'start': 284.47596875, 'end': 293.41971875, 'speaker': 'SPEAKER_00'}, {'start': 292.22159375, 'end': 300.05159375, 'speaker': 'SPEAKER_02'}, {'start': 295.05659375000005, 'end': 295.76534375, 'speaker': 'SPEAKER_00'}, {'start': 299.76471875000004, 'end': 299.96721875000003, 'speaker': 'SPEAKER_00'}]
+2024-11-25 14:47:34,906 [[94mINFO[0m] main_controller: Appel de la fonction de transcription...
+2024-11-25 14:47:34,906 [[94mINFO[0m] transcription_service: Starting transcription of diarization for tmp/tmp_audio_file_16000_mono.wav
+2024-11-25 14:47:34,911 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 0.03 s to 4.27 s
+2024-11-25 14:47:35,429 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 4.76 s to 12.27 s
+2024-11-25 14:47:36,141 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 12.74 s to 22.68 s
+2024-11-25 14:47:36,929 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 25.41 s to 26.25 s
+2024-11-25 14:47:37,168 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 27.54 s to 34.30 s
+2024-11-25 14:47:37,642 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.41 s).
+2024-11-25 14:47:37,642 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 34.83 s to 38.78 s
+2024-11-25 14:47:37,878 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 38.10 s to 43.43 s
+2024-11-25 14:47:38,566 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.44 s).
+2024-11-25 14:47:38,566 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 41.29 s to 42.44 s
+2024-11-25 14:47:38,883 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 43.20 s to 45.48 s
+2024-11-25 14:47:39,104 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.03 s).
+2024-11-25 14:47:39,105 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.02 s).
+2024-11-25 14:47:39,105 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.02 s).
+2024-11-25 14:47:39,105 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.03 s).
+2024-11-25 14:47:39,105 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.15 s).
+2024-11-25 14:47:39,105 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.05 s).
+2024-11-25 14:47:39,105 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 45.48 s to 46.72 s
+2024-11-25 14:47:39,386 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.15 s).
+2024-11-25 14:47:39,387 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.49 s).
+2024-11-25 14:47:39,387 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 47.37 s to 58.38 s
+2024-11-25 14:47:40,195 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 59.73 s to 63.58 s
+2024-11-25 14:47:40,490 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 62.86 s to 63.46 s
+2024-11-25 14:47:40,653 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 65.94 s to 67.63 s
+2024-11-25 14:47:40,921 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 67.04 s to 67.68 s
+2024-11-25 14:47:41,152 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 70.59 s to 85.82 s
+2024-11-25 14:47:42,541 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 88.46 s to 89.79 s
+2024-11-25 14:47:42,769 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.03 s).
+2024-11-25 14:47:42,769 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.32 s).
+2024-11-25 14:47:42,769 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.05 s).
+2024-11-25 14:47:42,770 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 91.17 s to 95.95 s
+2024-11-25 14:47:43,554 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 95.09 s to 98.19 s
+2024-11-25 14:47:43,881 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 99.34 s to 99.96 s
+2024-11-25 14:47:44,062 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 99.96 s to 100.83 s
+2024-11-25 14:47:44,287 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.30 s).
+2024-11-25 14:47:44,288 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 101.33 s to 102.56 s
+2024-11-25 14:47:44,556 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 102.66 s to 108.72 s
+2024-11-25 14:47:45,240 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.27 s).
+2024-11-25 14:47:45,240 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 103.93 s to 106.73 s
+2024-11-25 14:47:45,556 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 108.67 s to 124.30 s
+2024-11-25 14:47:47,200 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.05 s).
+2024-11-25 14:47:47,201 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.08 s).
+2024-11-25 14:47:47,201 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.02 s).
+2024-11-25 14:47:47,201 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.39 s).
+2024-11-25 14:47:47,201 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.03 s).
+2024-11-25 14:47:47,201 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.32 s).
+2024-11-25 14:47:47,201 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 125.19 s to 151.75 s
+2024-11-25 14:47:50,374 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.44 s).
+2024-11-25 14:47:50,374 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 141.04 s to 142.05 s
+2024-11-25 14:47:50,559 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 147.38 s to 159.36 s
+2024-11-25 14:47:52,355 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.39 s).
+2024-11-25 14:47:52,356 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.25 s).
+2024-11-25 14:47:52,356 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 158.52 s to 163.77 s
+2024-11-25 14:47:53,327 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.24 s).
+2024-11-25 14:47:53,327 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.32 s).
+2024-11-25 14:47:53,327 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.03 s).
+2024-11-25 14:47:53,327 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 162.01 s to 163.75 s
+2024-11-25 14:47:53,610 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 163.77 s to 171.09 s
+2024-11-25 14:47:54,451 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 169.25 s to 169.91 s
+2024-11-25 14:47:54,700 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 169.95 s to 197.62 s
+2024-11-25 14:47:58,393 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 196.56 s to 198.97 s
+2024-11-25 14:48:00,340 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 198.09 s to 198.75 s
+2024-11-25 14:48:00,611 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 200.47 s to 205.80 s
+2024-11-25 14:48:01,454 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 204.61 s to 209.53 s
+2024-11-25 14:48:02,325 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_02: too short (0.32 s).
+2024-11-25 14:48:02,325 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 210.18 s to 212.81 s
+2024-11-25 14:48:02,876 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.08 s).
+2024-11-25 14:48:02,876 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.17 s).
+2024-11-25 14:48:02,877 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 212.98 s to 214.33 s
+2024-11-25 14:48:03,036 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 213.03 s to 213.99 s
+2024-11-25 14:48:03,199 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.19 s).
+2024-11-25 14:48:03,199 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.05 s).
+2024-11-25 14:48:03,199 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.07 s).
+2024-11-25 14:48:03,200 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 214.63 s to 216.60 s
+2024-11-25 14:48:03,564 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.17 s).
+2024-11-25 14:48:03,564 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 214.97 s to 216.18 s
+2024-11-25 14:48:03,893 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 217.03 s to 222.73 s
+2024-11-25 14:48:04,729 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 219.84 s to 220.49 s
+2024-11-25 14:48:04,934 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_01 from 222.06 s to 222.68 s
+2024-11-25 14:48:05,071 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.30 s).
+2024-11-25 14:48:05,072 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.20 s).
+2024-11-25 14:48:05,072 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.30 s).
+2024-11-25 14:48:05,072 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.07 s).
+2024-11-25 14:48:05,072 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_01: too short (0.35 s).
+2024-11-25 14:48:05,072 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 223.96 s to 225.06 s
+2024-11-25 14:48:06,720 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 226.05 s to 226.88 s
+2024-11-25 14:48:06,889 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 226.88 s to 233.50 s
+2024-11-25 14:48:07,634 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 230.34 s to 234.42 s
+2024-11-25 14:48:08,237 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.10 s).
+2024-11-25 14:48:08,237 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.49 s).
+2024-11-25 14:48:08,237 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.12 s).
+2024-11-25 14:48:08,237 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 236.03 s to 239.37 s
+2024-11-25 14:48:08,801 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 241.38 s to 245.71 s
+2024-11-25 14:48:09,164 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 242.42 s to 243.91 s
+2024-11-25 14:48:09,513 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_03 from 245.21 s to 250.57 s
+2024-11-25 14:48:10,250 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 249.73 s to 260.46 s
+2024-11-25 14:48:10,957 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_03: too short (0.32 s).
+2024-11-25 14:48:10,958 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 262.66 s to 264.51 s
+2024-11-25 14:48:11,320 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 264.77 s to 271.55 s
+2024-11-25 14:48:11,878 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.05 s).
+2024-11-25 14:48:11,879 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 272.53 s to 273.73 s
+2024-11-25 14:48:12,073 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 274.25 s to 276.78 s
+2024-11-25 14:48:12,410 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 278.76 s to 284.48 s
+2024-11-25 14:48:12,665 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 284.48 s to 293.42 s
+2024-11-25 14:48:14,339 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_02 from 292.22 s to 300.05 s
+2024-11-25 14:48:15,137 [[92mDEBUG[0m] transcription_service: Extracting segment for SPEAKER_00 from 295.06 s to 295.77 s
+2024-11-25 14:48:15,337 [[93mWARNING[0m] transcription_service: Skipping segment for SPEAKER_00: too short (0.20 s).
+2024-11-25 14:48:15,337 [[94mINFO[0m] transcription_service: Transcription completed: tmp/tmp_audio_file_16000_mono.wav
+2024-11-25 14:48:15,337 [[94mINFO[0m] transcription_service: Cleaning up temporary directory.
+2024-11-25 14:48:15,342 [[94mINFO[0m] main_controller: Transcription réussie : SPEAKER_02 [0.03 s - 38.78 s]: ça fait trois réussites en échelle Donc globalement vous avez réussi, vous arrivez à avancer, vous arrivez à vous défaire de l'arrivée. Mais cela peut être long. Très long. Et vous voyez juste cette forme accélérée. Vous voyez cette... T'as un nom. Un homme noir avec des ailes. Pas très humain, voilà. Vous voyez ses yeux...
+
+SPEAKER_00 [38.10 s - 43.43 s]: Quand tu dis noir, c'est genre couleur de peau, genre toi, ou noir, couleur de peau, non.
+
+SPEAKER_02 [41.29 s - 45.48 s]: Ouais, couleur de peau, non. Noir Nuit.
+
+SPEAKER_03 [45.48 s - 46.72 s]: Non vraiment, t'as...
+
+SPEAKER_02 [47.37 s - 1min3.58s]: Vous voyez ses yeux dorés, son sourire. Contrairement aux deux Wretch que vous avez rencontrés précédemment, vous voyez ses... ses ailes, sa silhouette qui sont...
+
+SPEAKER_01 [1min2.86s - 1min7.63s]:  C'est Lucifer.
+
+SPEAKER_02 [1min7.04s - 1min29.79s]: C'est bon. de manière assez perturbante, presque céleste. Vous ne voyez aucun défaut sur sa personne. Vous voyez ses ailes qui sont magnifiques, son plumage de même. Et vous voyez juste se rapprocher de vous, sortir ses deux lames. Et il va juste...
+
+SPEAKER_00 [1min31.17s - 1min35.95s]: Il y a le temps de faire une action avant qu'il soit au contact. Enfin, je ne sais pas à quel moment il va arriver.
+
+SPEAKER_02 [1min35.09s - 1min38.19s]: Vous pouvez, si vous voulez faire un peu.
+
+SPEAKER_00 [1min39.34s - 1min39.96s]: 
+
+SPEAKER_02 [1min39.96s - 1min48.72s]: mais il avait choisi il arrive vers votre groupe. Mais pas derrière. Pardon. Pas derrière. Pas derrière. En pi, en diagonale.
+
+SPEAKER_00 [1min43.93s - 2min31.75s]: Pardon, pardon. Par derrière... Ok, bah je vais innover en... je commence en... pour changer. Moi je... De niveau 3 que j'avais bien gardé. Concentré sur les basses. Du coup j'incante en récitant des trucs dans une langue hyper mélodieuse que vous connaissez pas je pense. et il y a un genre d'anneau de lumière multicolore qui apparaît et qui quand on regarde dedans il s'étend en profondeur ça fait comme un genre de tunnel, de boyau de lumière de toutes les couleurs et vous voyez un genre d'être de la taille d'un hobbit je crois c'est un truc comme ça, vous voyez une fée sortir en bourdonnant avec ses aigles comme ça et je l'envoie essayer d'intercéder ça peut être un hobbité si vous voulez c'est un hobbité
+
+SPEAKER_03 [2min21.04s - 2min22.05s]: en tout cas
+
+SPEAKER_01 [2min27.38s - 2min39.36s]: C'était un hobbité. Ah si vous voulez, c'est un hobbité. De toute façon, en plus, dans les êtres féeriques, il y a des genres de hobbits. Donc ouais, il y a des grands yams poilus. C'est magnifique.
+
+SPEAKER_03 [2min38.52s - 2min43.77s]: Les poils qui descendent jusqu'au sol comme ça, et qui suivent quand il y a peut-être deux queues. Ça c'est dégueulasse.
+
+SPEAKER_00 [2min42.01s - 2min51.09s]: Ça c'est du culasse ! Ces stats c'est pas une dinguerie, si tu veux juste scénariser en mode il se prend deux tartes et il meurt.
+
+SPEAKER_02 [2min49.25s - 3min17.62s]: de l'histoire de... Vous allez voir alors qu'il arrive vers vous, vous voyez la fée qui vole vers lui et vous voyez qu'il prend sa lame, il prend ses deux lames pardon avec l'une des deux, il va juste trancher l'air et vous voyez une sorte d'arc de cercle, une vague de pression qui arrive vers vous. Est-ce que vous pouvez me faire un jet de sauvegarde de dextérité ? oui, effectivement !
+
+SPEAKER_00 [3min16.56s - 3min18.97s]: flashback Nous récupérer des"-
+
+SPEAKER_02 [3min18.09s - 3min25.80s]: C'est comme ça. Profession si j'ai mis. Ça dépend si tu as la maîtrise du dexte. Oui, je l'ai.
+
+SPEAKER_00 [3min24.61s - 3min29.53s]: Oui, j'ai. Placera un sort. Dextérité, sauvegarde, c'est ça ? Oui.
+
+SPEAKER_02 [3min30.18s - 3min34.33s]: Le DD c'est 16 s'il te plait. C'est bon hein. Rires
+
+SPEAKER_00 [3min33.03s - 3min33.99s]: 
+
+SPEAKER_01 [3min34.63s - 3min36.60s]: Merci pour briser notre morale.
+
+SPEAKER_02 [3min34.97s - 3min42.73s]: C'est pas obligé d'être... Normalement si tu cliques sur jet sauvegarde de dextérité, il te le met directement. Il y a un point de...
+
+SPEAKER_01 [3min39.84s - 3min42.68s]:  
+
+SPEAKER_03 [3min43.96s - 3min45.06s]: donc j'ai peu de qualités
+
+SPEAKER_00 [3min46.05s - 3min46.88s]: Merci.
+
+SPEAKER_03 [3min46.88s - 3min53.50s]: C'est ça, mais sans avoir un point à donner. Pas de professionnalité, on savait c'était créatif.
+
+SPEAKER_00 [3min50.34s - 4min5.71s]: Quoi de quoi ? Tu as trouvé Chinti ? On savait que c'était 85. C'était 90 feet la portée d'avocation, donc je pouvais vraiment le mettre comme... On est d'accord que c'est la...
+
+SPEAKER_03 [4min2.42s - 4min10.57s]: On est d'accord que c'est la... C'est la... Comment ça s'appelle ? C'est la monture qui esquive en soi, pour laquelle on est.
+
+SPEAKER_02 [4min9.73s - 4min24.51s]: C'est vous la monture, mais à partir du moment où la personne qui la monte a réussi à décaler la monture. Telle, telle, telle, telle...
+
+SPEAKER_00 [4min24.77s - 4min33.73s]: Bref, et moi 19 plus... Je pense pas que je maîtrise ce machin... plus de 21.
+
+SPEAKER_02 [4min34.25s - 4min44.48s]: Ok, je vais lui faire preuve de garde. le garde-rate 21 17 15
+
+SPEAKER_00 [4min44.48s - 4min53.42s]: Y'a moyen de... Enfin, là c'est de la triche, je sais que je connais le résultat, mais de... J'étais genre s'imprégé à un malus, mais d'essayer de protéger un enfant, ou c'est chaud ? Non, mais sans toi, t'es le...
+
+SPEAKER_02 [4min52.22s - 5min0.05s]: Un enfant qui est avec toi, à partir du moment où toi t'arrives, les personnes qui sont sur ta monture vont réussir à y arriver.
+
+SPEAKER_00 [4min55.06s- 4min55.77s]: On vous suit.
+2024-11-25 14:48:15,345 [[92mDEBUG[0m] main_controller: Nettoyage des fichiers temporaires...
