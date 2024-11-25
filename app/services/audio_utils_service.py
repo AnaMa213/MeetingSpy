@@ -1,106 +1,111 @@
 import logging
 import os
+from io import BytesIO
 
 import ffmpeg
+import requests
+from pydub import AudioSegment
 
 logger = logging.getLogger("audio_utils")
 
 
-def delete_temp_file(file_path: str):
+def download_audio_from_cloudinary(url: str) -> BytesIO:
     """
-    Supprime un fichier temporaire.
+    Télécharge un fichier audio depuis Cloudinary en utilisant l'URL fournie.
 
     Args:
-        file_path (str): Chemin du fichier temporaire à supprimer.
+        url (str): URL du fichier audio sur Cloudinary.
 
     Returns:
-        None
+        BytesIO: Flux de données du fichier audio téléchargé.
+
+    Raises:
+        requests.exceptions.RequestException: Si une erreur survient lors de la requête.
     """
     try:
-        if os.path.exists(file_path):  # Vérifie si le fichier existe
-            os.remove(file_path)  # Supprime le fichier
-            logger.info("Fichier temporaire supprimé : %s", file_path)
-        else:
-            logger.warning("Fichier temporaire non trouvé : %s", file_path)
-    except FileNotFoundError:
-        logger.error("Fichier non trouvé : %s", file_path)
-    except PermissionError:
+        logger.debug("Début du téléchargement de l'audio depuis Cloudinary: %s", url)
+        # Télécharger le fichier audio depuis Cloudinary
+        response = requests.get(url, stream=True, timeout=10)
+        response.raise_for_status()  # Vérifier si la requête est réussie
+
+        logger.info("Téléchargement réussi, conversion en BytesIO de %s", url)
+        # Lire le contenu dans un BytesIO
+        return BytesIO(response.content)
+    except requests.Timeout:
+        logger.error("Timeout error: the server did not respond within 10 seconds")
+    except requests.exceptions.RequestException as e:
         logger.error(
-            "Erreur de permission lors de la suppression du fichier %s", file_path
+            "Erreur lors de la récupération du fichier depuis Cloudinary: %s", e
         )
-    except OSError as e:
-        logger.error(
-            "Erreur lors de la suppression du fichier %s : %s", file_path, str(e)
-        )
+        raise
 
 
-def convert_to_wav(audio_path):
+def convert_to_wav(audio_url: str) -> str:
     """
-    Convert an audio file to a WAV file with a sample rate of 16 kHz and mono using FFmpeg.
+    Convert an audio file from Cloudinary to a WAV file with a sample rate of 16 kHz and mono using FFmpeg.
 
     Parameters
     ----------
-    audio_path : str
-        The path to the audio file to be converted.
+    audio_url : str
+        The URL to the audio file to be downloaded and converted.
 
     Returns
     -------
     str
         The path to the converted WAV file.
     """
+    # Télécharger l'audio depuis Cloudinary
+    audio_data = download_audio_from_cloudinary(audio_url)
+
+    # Charger le fichier audio dans pydub
+    audio = AudioSegment.from_file(audio_data)
+
     # Temporary directory for audio segments
     temp_dir = "tmp/"
     os.makedirs(temp_dir, exist_ok=True)
     wav_path = os.path.join(temp_dir, "tmp_audio_file_16000_mono.wav")
-    logger.debug("Starting conversion of audio file: %s", audio_path)
+    logger.debug("Starting conversion of audio file from URL: %s", audio_url)
 
-    if not audio_path.endswith(".wav") or not is_16000_mono(audio_path):
-        logger.info("Converting file to 16 kHz mono WAV: %s", audio_path)
+    # Sauvegarder le fichier audio téléchargé dans un fichier temporaire
+    temp_audio_path = os.path.join(temp_dir, "tmp_audio_file.wav")
+    audio.export(temp_audio_path, format="mp3")
+
+    # Conversion en WAV avec FFmpeg
+    if not temp_audio_path.endswith(".wav") or not is_16000_mono(temp_audio_path):
+        logger.info("Converting file to 16 kHz mono WAV: %s", temp_audio_path)
         (
-            ffmpeg.input(audio_path)
+            ffmpeg.input(temp_audio_path)
             .output(wav_path, ar=16000, ac=1, format="wav")
             .overwrite_output()
             .run()
         )
         logger.debug("Conversion completed. Output file: %s", wav_path)
     else:
-        logger.info("File is already 16 kHz mono WAV: %s", audio_path)
-        wav_path = audio_path
+        logger.info("File is already 16 kHz mono WAV: %s", temp_audio_path)
+        wav_path = temp_audio_path
 
     return wav_path
 
 
-def is_16000_mono(audio_path):
+def is_16000_mono(audio_path: str) -> bool:
     """
-    Check if an audio file is already in 16 kHz and mono.
+    Vérifie si un fichier audio est en 16 kHz et mono.
 
     Parameters
     ----------
     audio_path : str
-        Path to the audio file.
+        The path to the audio file.
 
     Returns
     -------
     bool
-        True if the audio file is in 16 kHz and mono, False otherwise.
+        True si le fichier est en 16 kHz et mono, False sinon.
     """
     try:
-        logger.debug("Starting analysis of audio file: %s", audio_path)
         probe = ffmpeg.probe(audio_path)
-        streams = probe.get("streams", [])
-        for stream in streams:
-            if stream.get("codec_type") == "audio":
-                sample_rate = int(stream.get("sample_rate", 0))
-                channels = int(stream.get("channels", 0))
-                logger.info(
-                    "Audio file: %s, sample rate: %d, channels: %d",
-                    audio_path,
-                    sample_rate,
-                    channels,
-                )
-                return sample_rate == 16000 and channels == 1
-        logger.info("No audio stream found in file: %s", audio_path)
-        return False
+        sample_rate = int(probe["streams"][0]["sample_rate"])
+        channels = int(probe["streams"][0]["channels"])
+        return sample_rate == 16000 and channels == 1
     except ffmpeg.Error as e:
-        logger.error("Erreur lors de la vérification du fichier audio : %s", e)
+        logger.error("Erreur lors de la vérification des propriétés audio : %s", e)
         return False

@@ -1,10 +1,10 @@
 import logging
-import os
 import shutil
 
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 
+from app.services.audio_utils_service import convert_to_wav
 from app.services.diarization_service import diarize
 from app.services.transcription_service import transcribe_diarization
 
@@ -16,9 +16,7 @@ module_logger = logging.getLogger("main_controller")
 @router.post(
     "/process_audio", summary="Traite un fichier audio en diarisation et transcription."
 )
-async def process_audio_to_text(
-    request: Request, file: UploadFile = File(...), num_speakers: int = 2
-):
+async def process_audio_to_text(request: Request, path: str, num_speakers: int = 2):
     """
     Traite un fichier audio pour effectuer la diarisation et la transcription.
 
@@ -30,24 +28,13 @@ async def process_audio_to_text(
     Returns:
         JSONResponse: Réponse JSON contenant le résultat de la transcription.
     """
-    if file.content_type not in ["audio/wav", "audio/mpeg"]:
-        module_logger.warning(
-            "Le type de fichier audio n'est pas supporté. Utilisez un fichier WAV ou MP3."
-        )
-        raise HTTPException(
-            status_code=400,
-            detail="Le type de fichier audio n'est pas supporté. Utilisez un fichier WAV ou MP3.",
-        )
+    # Récupérer le fichier
+    audio_path = convert_to_wav(path)
 
-    temp_dir = "tmp/"
-    os.makedirs(temp_dir, exist_ok=True)
-    tmp_audio_path = os.path.join(temp_dir, file.filename)
-
-    module_logger.info("Traitement du fichier %s", file.filename)
+    # Utiliser le fichier pour un traitement
+    module_logger.info("Traitement du fichier %s", audio_path)
 
     try:
-        with open(tmp_audio_path, "wb") as temp_file:
-            temp_file.write(await file.read())
 
         pipeline_diarization = request.app.state.diarization_pipeline
 
@@ -56,7 +43,7 @@ async def process_audio_to_text(
         )
 
         diarization_result, processed_audio_path = diarize(
-            path=tmp_audio_path,
+            path=audio_path,
             num_speakers=num_speakers,
             pipeline=pipeline_diarization,
         )

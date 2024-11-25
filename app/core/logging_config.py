@@ -74,5 +74,6 @@ def setup_logging():
     logging.getLogger("matplotlib").setLevel(logging.INFO)
     logging.getLogger("urllib3.connectionpool").setLevel(logging.INFO)
     logging.getLogger("fsspec.local").setLevel(logging.INFO)
+    logging.getLogger("pydub.converter").setLevel(logging.INFO)
     logging.getLogger("python_multipart.multipart").setLevel(logging.INFO)
     logging.getLogger().info("Logging is configured.")

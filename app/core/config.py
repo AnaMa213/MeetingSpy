@@ -1,5 +1,6 @@
 from typing import Optional
 
+import cloudinary
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,6 +27,10 @@ class Settings(BaseSettings):
     AUDIO_TEMP_DIR: str = (
         "/tmp/audio_files"  # Répertoire temporaire pour les fichiers audio
     )
+    # Configurations Cloudinary
+    CLOUDINARY_CLOUD_NAME: str  # Nom du cloud Cloudinary, doit être fourni dans `.env`
+    CLOUDINARY_API_KEY: str  # API Key Cloudinary, doit être fourni dans `.env`
+    CLOUDINARY_API_SECRET: str  # API Secret Cloudinary, doit être fourni dans `.env`
 
     # Configuration de Pydantic
     model_config = SettingsConfigDict(
@@ -35,3 +40,10 @@ class Settings(BaseSettings):
 
 # Instancier les paramètres une seule fois pour l'ensemble du projet
 settings = Settings()
+# Configurer Cloudinary
+cloudinary.config(
+    cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+    api_key=settings.CLOUDINARY_API_KEY,
+    api_secret=settings.CLOUDINARY_API_SECRET,
+    secure=True,
+)

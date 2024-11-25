@@ -25,7 +25,7 @@ def load_transcription_model():
         Le modèle de transcription chargé.
     """
     transcribe_model = whisper.load_model(
-        "large", device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        "large-v3", device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
     )
     return transcribe_model
 

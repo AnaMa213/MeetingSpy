@@ -3,8 +3,6 @@ import logging
 import torch
 from pyannote.audio import Pipeline as PyannotePipeline
 
-from app.services.audio_utils_service import convert_to_wav
-
 # Utiliser le logger globalement configuré
 module_logger = logging.getLogger("diarization_service")
 
@@ -58,15 +56,10 @@ def diarize(path, num_speakers, pipeline):
     """
     module_logger.info("Starting diarization pyannote process.")
     try:
+        module_logger.info("Diarizing audio: %s...", path)
 
-        module_logger.info("Converting audio to 16 kHz mono WAV: %s...", path)
-
-        audio_path = convert_to_wav(path)
-
-        module_logger.info("Diarizing audio: %s...", audio_path)
-
-        diarization = pipeline(audio_path, num_speakers=num_speakers)
-        return diarization, audio_path
+        diarization = pipeline(path, num_speakers=num_speakers)
+        return diarization, path
 
     except Exception as e:
         module_logger.error("Error during diarization: %s", str(e))
