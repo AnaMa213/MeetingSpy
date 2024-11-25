@@ -23,7 +23,7 @@ router = APIRouter()
 logger = logging.getLogger("transcription_controller")
 
 
-@router.post("/transcription", summary="Transcribe an audio file with diarization")
+@router.post("/process_transcribe", summary="Transcribe an audio file with diarization")
 async def transcription_endpoint(
     request: Request,
     path: str,  # Chemin vers le fichier audio

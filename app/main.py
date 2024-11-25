@@ -13,7 +13,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import diarization_controller, transcription_controller
+from app.api.routes import (
+    diarization_controller,
+    main_controller,
+    transcription_controller,
+)
 from app.core.config import settings
 from app.core.logging_config import setup_logging
 from app.services.diarization_service import load_diarizer
@@ -68,6 +72,10 @@ application.include_router(
 )
 application.include_router(
     transcription_controller.router, prefix="/transcription", tags=["Transcription"]
+)
+
+application.include_router(
+    main_controller.router, prefix="/main_process", tags=["Process Audio"]
 )
 
 # Configuration CORS

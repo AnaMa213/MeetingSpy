@@ -15,7 +15,7 @@ router = APIRouter()
 module_logger = logging.getLogger("diarization_controller")
 
 
-@router.post("/diarization", summary="Perform speaker diarization")
+@router.post("/process_diarize", summary="Perform speaker diarization")
 async def diarization_endpoint(
     request: Request, file: UploadFile = File(...), num_speakers: int = 2
 ):
